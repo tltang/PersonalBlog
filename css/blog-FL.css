@@ -1,0 +1,16 @@
+#oneFL{
+    background-image: url("../images/FL1.JPG");
+    background-size: contain;
+}
+#twoFL{
+    background-image: url("../images/FL2.JPG");
+    background-size: contain;
+}
+#threeFL{
+    background-image: url("../images/FL3.JPG");
+    background-size: cover;
+}
+#fourFL{
+    background-image: url("../images/FL4.JPG");
+    background-size: contain;
+}

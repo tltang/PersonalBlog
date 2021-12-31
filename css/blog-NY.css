@@ -1,0 +1,16 @@
+#oneNY{
+    background-image: url("../images/NY1.JPG");
+    background-size: cover;
+}
+#twoNY{
+    background-image: url("../images/NY2.JPG");
+    background-size: contain;
+}
+#threeNY{
+    background-image: url("../images/NY3.JPG");
+    background-size: cover;
+}
+#fourNY{
+    background-image: url("../images/NY4.JPG");
+    background-size: contain;
+}
