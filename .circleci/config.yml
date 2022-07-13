@@ -18,7 +18,8 @@ jobs:
       - checkout
       - run:
           name: "Say hello"
-          command: "echo Hello, World! $CIRCLE_JOB"
+          command: "echo Hello, World! "
+          command: echo $CIRCLE_JOB
 
 
 # Invoke jobs via workflows
