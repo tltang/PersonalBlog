@@ -32,7 +32,7 @@ jobs:
     steps:
       - checkout
       - run:
-          name: "Say hello"
+          name: "Say hello1"
           command: echo $CIRCLE_JOB
 
 
@@ -42,5 +42,7 @@ workflows:
   say-hello-workflow:
     jobs:
       - say-hello
-      - say-hello1
+      - say-hello1:
+          requires:
+            - say-hello
       
