@@ -97,11 +97,11 @@ workflows:
       - say-hello1:
           requires:
             - say-hello
-      - configure_infrastructure:
-          requires:
-            - say-hello1
-#      - create_infrastructure:
-#          requires:
-#            - say-hello1
+      - create_infrastructure:
+         requires:
+           - say-hello1
+      # - configure_infrastructure:
+      #     requires:
+      #       - say-hello1
 
       
