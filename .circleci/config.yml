@@ -133,7 +133,7 @@ workflows:
             - say-hello1
       - smoke_test:
           requires:
-            - say-hello1
+            - create_infrastructure
 #      - configure_infrastructure:
 #          requires:
 #            - say-hello1
