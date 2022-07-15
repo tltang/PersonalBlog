@@ -11,7 +11,19 @@ commands:
       id:
         type: string
     steps:
-      - run: echo << parameters.id >>    
+      - run: echo << parameters.id >>
+
+  # Exercise - Rollback
+  destroy_environment:
+    steps:
+      - run:
+          name: Destroy environment
+          # ${CIRCLE_WORKFLOW_ID} is a Built-in environment variable
+          # ${CIRCLE_WORKFLOW_ID:0:5} takes the first 5 chars of the variable CIRCLE_CI_WORKFLOW_ID
+          when: on_fail
+          command: |
+            aws cloudformation delete-stack --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:7}
+
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
@@ -68,7 +80,7 @@ jobs:
           command: |
             aws cloudformation deploy \
               --template-file template.yaml \
-              --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:5} \
+              --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:7} \
               --region us-east-1
 
   configure_infrastructure:
@@ -106,6 +118,7 @@ jobs:
             else
               return 1
             fi
+      - destroy_environment
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
@@ -115,12 +128,12 @@ workflows:
       - say-hello1:
           requires:
             - say-hello
+      - create_infrastructure:
+          requires:
+            - say-hello1
       - smoke_test:
           requires:
             - say-hello1
-#      - create_infrastructure:
-#         requires:
-#           - say-hello1
 #      - configure_infrastructure:
 #          requires:
 #            - say-hello1
