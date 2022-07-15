@@ -100,8 +100,8 @@ workflows:
 #      - create_infrastructure:
 #         requires:
 #           - say-hello1
-       - configure_infrastructure:
-           requires:
-             - say-hello1
+      - configure_infrastructure:
+          requires:
+            - say-hello1
 
       
