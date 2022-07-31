@@ -41,7 +41,8 @@ jobs:
           id: << pipeline.id >>
       - run:
           name: "Say hello"
-          command: echo 'Hello, World! ' $myName> ~/output.txt
+          # command: echo 'Hello, World! ' $myName> ~/output.txt
+          command: echo $myName
       - persist_to_workspace:
           root: ~/
           paths:
