@@ -41,33 +41,29 @@ jobs:
           id: << pipeline.id >>
       - run:
           name: "Say hello"
-          # command: echo 'Hello, World! ' $myName> ~/output.txt
-          command: echo $myName 
-  #     - persist_to_workspace:
-  #         root: ~/
-  #         paths:
-  #           - output.txt         
+          command: echo 'Hello, World! ' $myName> ~/output.txt
+          #command: echo $myName
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - output.txt
 
-  # say-hello1:
-  #   # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
-  #   # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
-  #   docker:
-  #     - image: cimg/base:stable
-  #       environment:
-  #         myName: Lisa
-  #   # Add steps to the job
-  #   # See: https://circleci.com/docs/2.0/configuration-reference/#steps
-  #   steps:
-  #     - attach_workspace:
-  #         at: ~/
-  #     - checkout
-  #     - run:
-  #         name: "Say hello1"
-  #         command: cat ~/output.txt
-  #     - run:
-  #         name: "Return on Error"
-  #         command: echo "Hello Error!"
-  #         when: on_fail
+  say-hello1:
+    docker:
+      - image: cimg/base:stable
+        environment:
+          myName: Lisa
+    steps:
+      - attach_workspace:
+          at: ~/
+      - checkout
+      - run:
+          name: "Say hello1"
+          command: cat ~/output.txt
+      - run:
+          name: "Return on Error"
+          command: echo "Hello Error!"
+          when: on_fail
 
   # create_infrastructure:
   #   docker:
@@ -124,9 +120,9 @@ workflows:
   say-hello-workflow:
     jobs:
       - say-hello
-      # - say-hello1:
-      #     requires:
-      #       - say-hello
+      - say-hello1:
+          requires:
+            - say-hello
       # - create_infrastructure:
       #     requires:
       #       - say-hello1
