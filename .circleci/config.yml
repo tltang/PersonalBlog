@@ -68,18 +68,18 @@ jobs:
           command: echo "Hello Error!"
           when: on_fail
 
-  # create_infrastructure:
-  #   docker:
-  #     - image: amazon/aws-cli
-  #   steps:
-  #     - checkout
-  #     - run:
-  #         name: Create Cloudformation Stack
-  #         command: |
-  #           aws cloudformation deploy \
-  #             --template-file template.yaml \
-  #             --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:7} \
-  #             --region us-east-1
+  create_infrastructure:
+    docker:
+      - image: amazon/aws-cli
+    steps:
+      - checkout
+      - run:
+          name: Create Cloudformation Stack
+          command: |
+            aws cloudformation deploy \
+              --template-file template.yaml \
+              --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:7} \
+              --region us-east-1
 
   # configure_infrastructure:
   #   docker:
@@ -126,9 +126,9 @@ workflows:
       - say-hello1:
           requires:
             - say-hello
-      # - create_infrastructure:
-      #     requires:
-      #       - say-hello1
+      - create_infrastructure:
+          requires:
+            - say-hello1
       # - smoke_test:
       #     requires:
       #       - create_infrastructure
