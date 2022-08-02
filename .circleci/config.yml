@@ -62,7 +62,7 @@ jobs:
       - run:
           name: "Say hello1"
           command: cat ~/output.txt
-      - run: exit 1
+#      - run: exit 1
       - run:
           name: "Return on Error"
           command: echo "Hello Error!"
