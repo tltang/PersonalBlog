@@ -81,23 +81,23 @@ jobs:
               --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:7} \
               --region us-east-1
 
-  # configure_infrastructure:
-  #   docker:
-  #     - image: python:3.7-alpine3.11
-  #   steps:
-  #     - checkout
-  #     - add_ssh_keys:
-  #         fingerprints: ["d5:e5:98:f0:23:1d:89:9a:6a:7a:9b:17:c5:8a:d9:c3"]
-  #     - run:
-  #         name: Install Ansible
-  #         command: |
-  #           # Install Ansible
-  #           apk add --update ansible
-  #     - run:
-  #         name: Run Playbook and Configure server
-  #         command: |
-  #           # Your command
-  #           ansible-playbook -i inventory.txt main.yml
+  configure_infrastructure:
+    docker:
+      - image: python:3.7-alpine3.11
+    steps:
+      - checkout
+      - add_ssh_keys:
+          fingerprints: ["d5:e5:98:f0:23:1d:89:9a:6a:7a:9b:17:c5:8a:d9:c3"]
+      - run:
+          name: Install Ansible
+          command: |
+            # Install Ansible
+            apk add --update ansible
+      - run:
+          name: Run Playbook and Configure server
+          command: |
+            # Your command
+            ansible-playbook -i inventory.txt main.yml
 
   # Exercise: Smoke Testing
   # smoke_test:
@@ -126,14 +126,14 @@ workflows:
       - say-hello1:
           requires:
             - say-hello
-      - create_infrastructure:
-          requires:
-            - say-hello1
+#      - create_infrastructure:
+#          requires:
+#            - say-hello1
       # - smoke_test:
       #     requires:
       #       - create_infrastructure
-#      - configure_infrastructure:
-#          requires:
-#            - say-hello1
+     - configure_infrastructure:
+         requires:
+           - say-hello1
 
       
