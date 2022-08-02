@@ -95,30 +95,30 @@ jobs:
           command: |
             # Install Ansible
             apk add --update ansible
-      - run:
-          name: Run Playbook and Configure server
-          command: |
-            # Your command
-            ansible-playbook -i inventory.txt main.yml
+#      - run:
+#          name: Run Playbook and Configure server
+#          command: |
+#            # Your command
+#            ansible-playbook -i inventory.txt main.yml
 
   # Exercise: Smoke Testing
-  # smoke_test:
-  #   docker:
-  #     - image: amazon/aws-cli
-  #   steps:
-  #     - run: apk add --update curl
-  #     - run:
-  #         name: smoke test
-  #         command: |
-  #           URL="https://blog.udacitybbb.com/"
-  #           # Test if website exists
-  #           if curl -s --head ${URL} 
-  #           then
-  #             return 0
-  #           else
-  #             return 1
-  #           fi
-  #     - destroy_environment
+  smoke_test:
+    docker:
+      - image: amazon/aws-cli
+    steps:
+      - run: apk add --update curl
+      - run:
+          name: smoke test
+          command: |
+            URL="https://blog.udacity.com/"
+            # Test if website exists
+            if curl -s --head ${URL} 
+            then
+              return 0
+            else
+              return 1
+            fi
+#      - destroy_environment
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
@@ -131,11 +131,12 @@ workflows:
 #      - create_infrastructure:
 #          requires:
 #            - say-hello1
-      # - smoke_test:
-      #     requires:
-      #       - create_infrastructure
       - configure_infrastructure:
           requires:
             - say-hello1
+      - smoke_test:
+          requires:
+            - configure_infrastructure
+      #            - create_infrastructure
 
       
