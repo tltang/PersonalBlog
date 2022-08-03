@@ -24,9 +24,9 @@ commands:
     steps:
       - run:
           name: Destroy environment
+          when: on_fail
           # ${CIRCLE_WORKFLOW_ID} is a Built-in environment variable
           # ${CIRCLE_WORKFLOW_ID:0:5} takes the first 5 chars of the variable CIRCLE_CI_WORKFLOW_ID
-#          when: on_fail
           command: |
 #            aws cloudformation delete-stack --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:7}
             aws cloudformation delete-stack --stack-name myStack-4943fb0
@@ -119,7 +119,6 @@ jobs:
               return 1
             fi
       - destroy_environment
-        when: on_fail
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
